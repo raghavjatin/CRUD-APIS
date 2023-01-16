@@ -1,10 +1,11 @@
 import express, { Request, Response } from "express";
 import * as bodyParser from "body-parser";
-import { AppDataSource } from "./connection/connection";
 import { Routes } from "./api/routes";
+import { DBConnection } from "./database/connection";
 
-class Server {
-  private app: express.Application;
+class App {
+  // private app: express.Application;
+  public app: express.Application = express();
   private router: Routes = new Routes();
 
   constructor() {
@@ -12,15 +13,7 @@ class Server {
     this.configuration();
     this.routes();
     this.router.routes(this.app);
-
-    AppDataSource.initialize()
-      .then(() => {
-        // db initialized
-        // console.log("DB Connected!!");
-      })
-      .catch((err: Error) => {
-        throw new Error(`'Database connection error: ${err}`);
-      });
+    DBConnection.databaseConnection();
   }
   public async configuration(): Promise<void> {
     this.app.set("port", process.env.PORT || 3000);
@@ -43,10 +36,12 @@ class Server {
    */
   public async start(): Promise<void> {
     this.app.listen(this.app.get("port"), () => {
-      // console.log(`Server is listening ${this.app.get("port")} port.`);
+      // eslint-disable-next-line no-console
+      console.log(`Server is listening ${this.app.get("port")} port.`);
     });
   }
 }
 
-const server = new Server(); // Create server instance
+const server = new App(); // Create server instance
 server.start(); // Execute the server
+export default new App().app;
