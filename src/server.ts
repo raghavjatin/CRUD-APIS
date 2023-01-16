@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import { AppDataSource } from "./connection/connection";
-import { Routes } from "./routes";
+import { Routes } from "./api/routes";
 
 class Server {
   private app: express.Application;
@@ -23,7 +23,7 @@ class Server {
       });
   }
   public async configuration(): Promise<void> {
-    this.app.set("port", process.env.PORT || 8080);
+    this.app.set("port", process.env.PORT || 3000);
     this.app.use(express.json());
   }
 

@@ -1,9 +1,8 @@
-import { Response, Request, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Service } from "typedi";
-import constant from "../config/constant";
-import { Product } from "../entity/product.model";
-import { ProductService } from "../services/product.service";
-import { ResponseParser } from "../util/response-parser";
+import constant from "../../config/constant";
+import { ProductService } from "../../service/product.service";
+import { ResponseParser } from "../../util/response-parser";
 
 @Service()
 class ProductController {
@@ -14,10 +13,14 @@ class ProductController {
     this.productService = new ProductService();
   }
 
-  public findAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+  public findAllProducts = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
       const products = await this.productService.findProduct();
-      this.responseParser
+      return this.responseParser
         .setHttpCode(constant.HTTP_STATUS_OK)
         .setBody(products)
         .setMessage("products found successfully!")
@@ -27,11 +30,15 @@ class ProductController {
     }
   };
 
-  public createProduct = async (req: Request, res: Response, next: NextFunction) => {
+  public createProduct = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
-      const product = req["body"] as Product;
-      const newProduct = await this.productService.createProduct(product);
-      this.responseParser
+      const data = req.body;
+      const newProduct = await this.productService.createProduct(data);
+      return this.responseParser
         .setHttpCode(constant.HTTP_STATUS_OK)
         .setBody(newProduct)
         .setMessage("product created successfully!")
@@ -41,11 +48,14 @@ class ProductController {
     }
   };
 
-  public findProductById = async (req: Request, res: Response, next: NextFunction) => {
+  public findProductById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
-      console.log("req paramn", req.params);
       const products = await this.productService.findProductById(req.params.id);
-      this.responseParser
+      return this.responseParser
         .setHttpCode(constant.HTTP_STATUS_OK)
         .setBody(products)
         .setMessage("product find successfully!")
@@ -55,12 +65,18 @@ class ProductController {
     }
   };
 
-  public updateProductDetails = async (req: Request, res: Response, next: NextFunction) => {
+  public updateProductDetails = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
-      const product = req["body"] as Product;
-      const product_id = req["params"]["id"];
-      const updateProduct = await this.productService.updateProduct(product, product_id);
-      this.responseParser
+      const data = req.body;
+      const {
+        params: { id },
+      } = req;
+      const updateProduct = await this.productService.updateProduct(data, id);
+      return this.responseParser
         .setHttpCode(constant.HTTP_STATUS_OK)
         .setBody(updateProduct)
         .setMessage("update product successfully!")
@@ -70,11 +86,17 @@ class ProductController {
     }
   };
 
-  public deleteProductById = async (req: Request, res: Response, next: NextFunction) => {
+  public deleteProductById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
-      const id = req["params"]["id"];
-      const result = await this.productService.deleteProduct(Number(id));
-      this.responseParser
+      const {
+        params: { id },
+      } = req;
+      const result = await this.productService.deleteProduct(id);
+      return this.responseParser
         .setHttpCode(constant.HTTP_STATUS_OK)
         .setBody(result)
         .setMessage("product delete successfully!")

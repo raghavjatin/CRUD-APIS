@@ -20,7 +20,7 @@ export class Product {
   @Column()
   public price: number;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar", default: "test description" })
   public description: string;
 
   @CreateDateColumn({
