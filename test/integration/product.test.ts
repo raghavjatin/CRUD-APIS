@@ -79,12 +79,12 @@ describe("Product CRUD API", () => {
     expect(response.body.data).toHaveProperty("description");
   });
 
-  it("Should not return product with invalid id", async () => {
+  it("Should not return product with invalid id with status code 404", async () => {
     const response = await request(app).get(`/api/product/${invalidProductID}`);
     expect(response.statusCode).toEqual(404);
   });
 
-  it("Should not return validation error", async () => {
+  it("Should return validation error with status code 400", async () => {
     const response = await request(app).post("/api/product").send(invalidProduct);
 
     expect(response.statusCode).toEqual(400);
