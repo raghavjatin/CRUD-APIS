@@ -1,4 +1,5 @@
 import { IProduct } from "@type/product";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import createHttpError from "http-errors";
 import { Service } from "typedi";
 import { getManager } from "typeorm";
@@ -39,9 +40,13 @@ export class ProductService {
 
   // create new product
   public async createProduct(product: Product): Promise<IProduct> {
-    const productRepository = getManager().getCustomRepository(ProductRepo);
-    const newProduct = await productRepository.save(product);
-    return newProduct;
+    try {
+      const productRepository = getManager().getCustomRepository(ProductRepo);
+      const newProduct = await productRepository.save(product);
+      return newProduct;
+    } catch (err) {
+      throw new createHttpError.BadRequest("something went wrong");
+    }
   }
 
   // update product

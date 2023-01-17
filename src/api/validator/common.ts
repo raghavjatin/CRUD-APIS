@@ -22,6 +22,17 @@ const requiredNumberValidation = (key: string): Joi.NumberSchema =>
       "any.required": `${key} is required`,
     });
 
+const requiredQuantityValidation = (key: string): Joi.NumberSchema =>
+  Joi.number()
+    .integer()
+    .min(0)
+    .max(100)
+    .required()
+    .messages({
+      "number.base": `${key} must be a number`,
+      "any.required": `${key} is required`,
+    });
+
 const optionalNumberValidation = (key: string): Joi.NumberSchema =>
   Joi.number().messages({
     "number.base": `${key} must be a number`,
@@ -32,5 +43,6 @@ export {
   requiredStringValidation,
   optionalStringValidation,
   requiredNumberValidation,
+  requiredQuantityValidation,
   optionalNumberValidation,
 };
