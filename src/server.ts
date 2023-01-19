@@ -35,11 +35,12 @@ class App {
    * Used to start the server
    */
   public async start(): Promise<void> {
-    const server = this.app.listen(this.app.get("port"), () => {
+    // const server =
+    this.app.listen(this.app.get("port"), () => {
       // eslint-disable-next-line no-console
       console.log(`Server is listening ${this.app.get("port")} port.`);
     });
-    server.close();
+    // server.close();
   }
 }
 

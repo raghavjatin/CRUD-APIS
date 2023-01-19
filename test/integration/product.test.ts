@@ -1,9 +1,6 @@
 import { DBConnection } from "../../src/database/connection";
 import request from "supertest";
 import app from "../../src/server";
-import { ProductService } from "../../src/service/product.service";
-import { getManager } from "typeorm";
-import { ProductRepo } from "../../src/database/repository/product.repository";
 
 import {
   invalidProduct,
@@ -11,7 +8,6 @@ import {
   invalidProductWithQnty,
   product,
 } from "../fixtures/product";
-import createHttpError from "http-errors";
 
 describe("Product CRUD API", () => {
   beforeAll(async () => {
