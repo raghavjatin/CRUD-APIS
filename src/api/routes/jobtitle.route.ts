@@ -1,7 +1,7 @@
-import JobTitleController from "@api/controller/jobtitle.controller";
-import { jobTitle } from "@api/validator/jobtitle";
 import express from "express";
 import Container from "typedi";
+import { jobTitle } from "../validator/jobtitle";
+import JobTitleController from "../controller/jobtitle.controller";
 import HttpRequestValidator from "../../middleware/http-request-validator";
 
 class JobTitle {
@@ -28,6 +28,7 @@ class JobTitle {
       this.httpRequestValidator.validate("body", jobTitle),
       this.jobTitleController.updateJobTitleDetails,
     );
+
     this.router.delete("/:id", this.jobTitleController.deleteJobTitleById);
   }
 }

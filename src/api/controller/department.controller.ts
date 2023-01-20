@@ -1,6 +1,6 @@
-import { DepartmentService } from "@service/department.service";
 import { NextFunction, Request, Response } from "express";
 import { Service } from "typedi";
+import { DepartmentService } from "../../service/department.service";
 import constant from "../../config/constant";
 import { ResponseParser } from "../../util/response-parser";
 

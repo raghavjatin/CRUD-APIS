@@ -1,7 +1,7 @@
-import DepartmentController from "@api/controller/department.controller";
-import { department } from "@api/validator/department";
 import express from "express";
 import Container from "typedi";
+import { department } from "../validator/department";
+import DepartmentController from "../controller/department.controller";
 import HttpRequestValidator from "../../middleware/http-request-validator";
 
 class Department {

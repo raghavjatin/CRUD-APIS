@@ -1,6 +1,6 @@
-import { JobTitleService } from "@service/jobtitle.servic";
 import { NextFunction, Request, Response } from "express";
 import { Service } from "typedi";
+import { JobTitleService } from "../../service/jobtitle.service";
 import constant from "../../config/constant";
 import { ResponseParser } from "../../util/response-parser";
 

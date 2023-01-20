@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class jobtitle1674107353016 implements MigrationInterface {
   private readonly tableName = "job_title";

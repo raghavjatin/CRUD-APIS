@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Employee } from "./employee.model";
 
 @Entity("attendance")
@@ -15,12 +23,20 @@ export class Attendance {
   @Column()
   public employeeId: string;
 
-  @ManyToOne(() => Employee, (employee) => employee.attendance)
+  // @ManyToOne(() => Employee, (employee) => employee.attendance)
+  // public employee: Employee;
+
+  @ManyToOne(() => Employee, (employee) => employee.employeeId)
+  @JoinColumn({ name: "employee_id" })
   public employee: Employee;
 
-  @Column()
-  public createdAt: string;
+  @CreateDateColumn({
+    select: true,
+  })
+  public createdAt: Date;
 
-  @Column()
-  public updatedAt: string;
+  @UpdateDateColumn({
+    select: true,
+  })
+  public updatedAt: Date;
 }

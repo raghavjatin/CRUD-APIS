@@ -23,8 +23,8 @@ export class DBConnection {
       password: TYPEORM_PASSWORD,
       database: TYPEORM_DATABASE,
       entities: [path.join(`${__dirname}/model/*.{js,ts}`)],
-      // migrations: [`${__dirname}/migration/*`],
-      migrations: ["src/database/migration/**/*{.ts,.js}"],
+      migrations: [path.join(`${__dirname}/migration/**/*{.ts,.js}`)],
+      // migrations: ["src/database/migration/**/*{.ts,.js}"],
       synchronize: true,
       logging: Boolean(TYPEORM_LOGGING), // true => make it to true to log the sql queries
       namingStrategy: new SnakeNamingStrategy(),

@@ -1,4 +1,4 @@
 export interface IJobDepartment {
-  departmentID: string;
+  departmentId: string;
   departmentName: string;
 }

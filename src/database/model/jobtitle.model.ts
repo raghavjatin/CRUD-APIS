@@ -1,10 +1,17 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Employee } from "./employee.model";
 
 @Entity("job_title")
 export class Jobtitle {
   @PrimaryGeneratedColumn("uuid")
-  public jobTitleID: string;
+  public jobTitleId: string;
 
   @Column()
   public jobTitleName: string;
@@ -15,9 +22,13 @@ export class Jobtitle {
   @OneToMany(() => Employee, (employee) => employee.jobTitle)
   public employee: Employee[];
 
-  @Column()
-  public createdAt: string;
+  @CreateDateColumn({
+    select: true,
+  })
+  public createdAt: Date;
 
-  @Column()
-  public updatedAt: string;
+  @UpdateDateColumn({
+    select: true,
+  })
+  public updatedAt: Date;
 }

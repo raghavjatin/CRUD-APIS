@@ -1,7 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Employee } from "./employee.model";
 
-@Entity("users")
+@Entity("leave")
 export class Leave {
   @PrimaryGeneratedColumn("uuid")
   public leaveId: string;
@@ -21,9 +28,13 @@ export class Leave {
   @ManyToOne(() => Employee, (employee) => employee.leave)
   public employee: Employee;
 
-  @Column()
-  public createdAt: string;
+  @CreateDateColumn({
+    select: true,
+  })
+  public createdAt: Date;
 
-  @Column()
-  public updatedAt: string;
+  @UpdateDateColumn({
+    select: true,
+  })
+  public updatedAt: Date;
 }

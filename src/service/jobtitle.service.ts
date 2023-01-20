@@ -1,9 +1,9 @@
-import { Jobtitle } from "@database/model/jobtitle.model";
-import { JobTitleRepo } from "@database/repository/jobtitle.repository";
 import { IJobTitle } from "@type/jobtitle";
 import createHttpError from "http-errors";
 import { Service } from "typedi";
 import { getManager } from "typeorm";
+import { JobTitleRepo } from "../database/repository/jobtitle.repository";
+import { Jobtitle } from "../database/model/jobtitle.model";
 
 @Service()
 export class JobTitleService {
@@ -14,9 +14,9 @@ export class JobTitleService {
       const jobTitles = await jobTitleRepository.find();
 
       const jobTitleArray = (jobTitles || []).map((jobTitle: IJobTitle) => ({
-        jobTitleID: jobTitle.jobTitleID,
+        jobTitleId: jobTitle.jobTitleId,
         jobTitleName: jobTitle.jobTitleName,
-        jobDescripton: jobTitle.jobDescripton,
+        jobDescription: jobTitle.jobDescription,
       }));
       return jobTitleArray || [];
     } catch (err) {
@@ -36,10 +36,12 @@ export class JobTitleService {
   }
 
   // update JobTitle
-  public async updateJobTitle(jobTitle: Jobtitle, job_title_id: string): Promise<IJobTitle> {
+  public async updateJobTitle(jobTitle: Jobtitle, jobTitleId: string): Promise<IJobTitle> {
     try {
       const jobTitleRepository = getManager().getCustomRepository(JobTitleRepo);
-      const findJobTitle = await jobTitleRepository.findOne({ where: { id: job_title_id } });
+      const findJobTitle = await jobTitleRepository.findOne({
+        where: { jobTitleId },
+      });
       return jobTitleRepository.save({
         ...findJobTitle, // existing fields
         ...jobTitle, // updated fields
@@ -50,10 +52,10 @@ export class JobTitleService {
   }
 
   // delete JobTitle by id
-  public async deleteJobTitle(id: string): Promise<IJobTitle> {
+  public async deleteJobTitle(job_title_id: string): Promise<IJobTitle> {
     try {
       const jobTitleRepository = getManager().getCustomRepository(JobTitleRepo);
-      const findJobTitle = await jobTitleRepository.findOne({ where: { id } });
+      const findJobTitle = await jobTitleRepository.findOne({ where: { job_title_id } });
       const deletedJobTitle = await jobTitleRepository.remove(findJobTitle);
 
       return deletedJobTitle;

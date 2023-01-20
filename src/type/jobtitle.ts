@@ -1,5 +1,5 @@
 export interface IJobTitle {
-  jobTitleID: string;
+  jobTitleId: string;
   jobTitleName: string;
-  jobDescripton?: string;
+  jobDescription: string;
 }

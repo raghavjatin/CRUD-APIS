@@ -1,4 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Attendance } from "./attendance.model";
 import { Department } from "./department.model";
 import { Jobtitle } from "./jobtitle.model";
@@ -22,16 +31,16 @@ export class Employee {
   public gender: string;
 
   @Column()
-  public mobileNumber: string;
+  public mobileNumber: number;
 
   @Column()
-  public hireDate: string;
+  public hireDate: Date;
 
   @Column()
   public jobTitle: string;
 
   @Column()
-  public jobTitleID: string;
+  public jobTitleId: string;
 
   @Column()
   public departmentId: string;
@@ -44,8 +53,11 @@ export class Employee {
   @JoinColumn()
   public department: Department;
 
+  // @OneToMany(() => Attendance, (attendance) => attendance.employee)
+  // @JoinColumn()
+  // public attendance: Attendance[];
+
   @OneToMany(() => Attendance, (attendance) => attendance.employee)
-  @JoinColumn()
   public attendance: Attendance[];
 
   @ManyToOne(() => Jobtitle, (jobtitle) => jobtitle.employee)
@@ -56,9 +68,13 @@ export class Employee {
   @JoinColumn()
   public leave: Leave[];
 
-  @Column()
-  public createdAt: string;
+  @CreateDateColumn({
+    select: true,
+  })
+  public createdAt: Date;
 
-  @Column()
-  public updatedAt: string;
+  @UpdateDateColumn({
+    select: true,
+  })
+  public updatedAt: Date;
 }

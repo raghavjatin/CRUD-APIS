@@ -1,4 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Employee } from "./employee.model";
 
 @Entity("department")
@@ -12,9 +19,13 @@ export class Department {
   @OneToMany(() => Employee, (employee) => employee.department)
   public employee: Employee[];
 
-  @Column()
-  public createdAt: string;
+  @CreateDateColumn({
+    select: true,
+  })
+  public createdAt: Date;
 
-  @Column()
-  public updatedAt: string;
+  @UpdateDateColumn({
+    select: true,
+  })
+  public updatedAt: Date;
 }
