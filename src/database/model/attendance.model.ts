@@ -12,13 +12,13 @@ import { Employee } from "./employee.model";
 @Entity("attendance")
 export class Attendance {
   @PrimaryGeneratedColumn("uuid")
-  public attendanceID: string;
+  public attendanceId: string;
 
   @Column()
-  public timeIn: string;
+  public timeIn: Date;
 
   @Column()
-  public timeOut: string;
+  public timeOut: Date;
 
   @Column()
   public employeeId: string;

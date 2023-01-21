@@ -46,7 +46,6 @@ export class attendance1674107395981 implements MigrationInterface {
         ],
         foreignKeys: [
           new TableForeignKey({
-            name: "FK_employee_id",
             columnNames: ["employee_id"],
             referencedColumnNames: ["employee_id"],
             referencedTableName: "employee",

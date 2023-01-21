@@ -45,13 +45,13 @@ export class Employee {
   @Column()
   public departmentId: string;
 
-  // @OneToOne(() => Department)
-  // @JoinColumn({ name: "departmentId" })
-  // public department: Department;
-
-  @ManyToOne(() => Department, (department) => department.employee)
-  @JoinColumn()
+  @ManyToOne(() => Department)
+  @JoinColumn({ name: "department_id" })
   public department: Department;
+
+  // @ManyToOne(() => Department, (department) => department.employee)
+  // @JoinColumn()
+  // public department: Department;
 
   // @OneToMany(() => Attendance, (attendance) => attendance.employee)
   // @JoinColumn()
@@ -60,12 +60,19 @@ export class Employee {
   @OneToMany(() => Attendance, (attendance) => attendance.employee)
   public attendance: Attendance[];
 
-  @ManyToOne(() => Jobtitle, (jobtitle) => jobtitle.employee)
-  @JoinColumn()
+  // @ManyToOne(() => Jobtitle, (jobtitle) => jobtitle.employee)
+  // @JoinColumn()
+  // public jobtitle: Jobtitle;
+
+  @ManyToOne(() => Jobtitle)
+  @JoinColumn({ name: "job_title_id" })
   public jobtitle: Jobtitle;
 
+  // @OneToMany(() => Leave, (leave) => leave.employee)
+  // @JoinColumn()
+  // public leave: Leave[];
+
   @OneToMany(() => Leave, (leave) => leave.employee)
-  @JoinColumn()
   public leave: Leave[];
 
   @CreateDateColumn({

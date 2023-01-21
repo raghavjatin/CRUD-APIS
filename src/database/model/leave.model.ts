@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -17,15 +18,19 @@ export class Leave {
   public employeeId: string;
 
   @Column()
-  public fromDate: string;
+  public fromDate: Date;
 
   @Column()
-  public toDate: string;
+  public toDate: Date;
 
   @Column()
   public reason: string;
 
+  // @ManyToOne(() => Employee, (employee) => employee.leave)
+  // public employee: Employee;
+
   @ManyToOne(() => Employee, (employee) => employee.leave)
+  @JoinColumn({ name: "employee_id" })
   public employee: Employee;
 
   @CreateDateColumn({

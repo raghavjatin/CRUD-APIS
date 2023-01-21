@@ -33,11 +33,9 @@ export class EmployeeService {
     try {
       const empRepository = getManager().getCustomRepository(EmployeeRepo);
 
-      // console.log("employeepayload", employee);
       const newEmp = await empRepository.save(employee);
       return newEmp;
     } catch (err) {
-      // console.log("errrrr@@@@", err);
       throw new createHttpError.BadRequest("something went wrong");
     }
   }
