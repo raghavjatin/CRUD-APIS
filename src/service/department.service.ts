@@ -7,7 +7,7 @@ import { DepartmentRepo } from "../database/repository/department.repository";
 
 @Service()
 export class DepartmentService {
-  // fetch all job title details
+  // fetch all department details
   public async findDepartments(): Promise<IJobDepartment[]> {
     try {
       const departmentRepo = getManager().getCustomRepository(DepartmentRepo);
@@ -23,7 +23,7 @@ export class DepartmentService {
     }
   }
 
-  // create Job Title
+  // create Department
   public async createDepartment(dep: Department): Promise<IJobDepartment> {
     try {
       const departmentRepo = getManager().getCustomRepository(DepartmentRepo);

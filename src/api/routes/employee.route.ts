@@ -17,18 +17,20 @@ class Employee {
   }
 
   private assign(): void {
-    // this.router.get("/", this.employeeController.findEmployees);
+    this.router.get("/", this.employeeController.findEmployeeDetailsWithJobTitleAndDepartment);
+    this.router.get(
+      "/:id",
+      this.employeeController.findEmployeeDetailsWithJobTitleAndDepartmentById,
+    );
+
+    this.router.get("/attendance/:id", this.employeeController.findEmployeeAttendanceById);
+    this.router.get("/leave/:id", this.employeeController.findEmployeeLeavesAttendanceById);
+
     this.router.post(
       "/",
       this.httpRequestValidator.validate("body", employee),
       this.employeeController.createEmployee,
     );
-    // this.router.put(
-    //   "/:id",
-    //   this.httpRequestValidator.validate("body", employee),
-    //   this.employeeController.updateEmployeeDetails,
-    // );
-    // this.router.delete("/:id", this.employeeController.deleteEmployeeById);
   }
 }
 

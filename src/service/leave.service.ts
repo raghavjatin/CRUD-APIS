@@ -7,7 +7,7 @@ import { Leave } from "../database/model/leave.model";
 
 @Service()
 export class LeaveService {
-  // fetch all job title details
+  // fetch all leave details
   public async findAllLeaves(): Promise<ILeave[]> {
     try {
       const leaveRepository = getManager().getCustomRepository(LeaveRepo);
@@ -26,7 +26,7 @@ export class LeaveService {
     }
   }
 
-  // create Job Title
+  // create leave
   public async createLeave(leave: Leave): Promise<ILeave> {
     try {
       const leaveRepository = getManager().getCustomRepository(LeaveRepo);

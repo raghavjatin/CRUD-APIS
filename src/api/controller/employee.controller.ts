@@ -13,22 +13,81 @@ class EmployeeController {
     this.employeeService = new EmployeeService();
   }
 
-  // public findEmployees = async (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction,
-  // ): Promise<Response> => {
-  //   try {
-  //     const result = await this.employeeService.findEmployee();
-  //     return this.responseParser
-  //       .setHttpCode(constant.HTTP_STATUS_OK)
-  //       .setBody(result)
-  //       .setMessage("employee found successfully")
-  //       .send(res);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // };
+  public findEmployeeDetailsWithJobTitleAndDepartment = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
+    try {
+      const result = await this.employeeService.getEmployeeTitleAndDepartment();
+      return this.responseParser
+        .setHttpCode(constant.HTTP_STATUS_OK)
+        .setBody(result)
+        .setMessage("employee found successfully")
+        .send(res);
+    } catch (err) {
+      next(err);
+    }
+  };
+  public findEmployeeDetailsWithJobTitleAndDepartmentById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
+    try {
+      const {
+        params: { id },
+      } = req;
+      const result = await this.employeeService.getEmployeeTitleAndDepartmentByID(id);
+      return this.responseParser
+        .setHttpCode(constant.HTTP_STATUS_OK)
+        .setBody(result)
+        .setMessage("employee found successfully")
+        .send(res);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public findEmployeeAttendanceById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
+    try {
+      const {
+        params: { id },
+      } = req;
+      const result = await this.employeeService.getEmployeeAttendanceByID(id);
+      return this.responseParser
+        .setHttpCode(constant.HTTP_STATUS_OK)
+        .setBody(result)
+        .setMessage("employee attendance found successfully")
+        .send(res);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public findEmployeeLeavesAttendanceById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
+    try {
+      const {
+        params: { id },
+      } = req;
+      const result = await this.employeeService.getEmployeeLeaveAttendanceByID(id);
+      return this.responseParser
+        .setHttpCode(constant.HTTP_STATUS_OK)
+        .setBody(result)
+        .setMessage("employee leaves and attendance found successfully")
+        .send(res);
+    } catch (err) {
+      next(err);
+    }
+  };
 
   public createEmployee = async (
     req: Request,
@@ -47,50 +106,6 @@ class EmployeeController {
       next(err);
     }
   };
-
-  // public updateEmployeeDetails = async (req: Request, res: Response): Promise<Response> => {
-  //   try {
-  //     const data = req.body;
-  //     const {
-  //       params: { id },
-  //     } = req;
-  //     const result = await this.employeeService.updateEmployee(data, id);
-  //     return this.responseParser
-  //       .setHttpCode(constant.HTTP_STATUS_OK)
-  //       .setBody(result)
-  //       .setMessage("update employee successfully")
-  //       .send(res);
-  //   } catch (err) {
-  //     res.status(err.status);
-  //     res.json({
-  //       error: {
-  //         message: err.message,
-  //       },
-  //     });
-  //   }
-  // };
-
-  // public deleteEmployeeById = async (req: Request, res: Response): Promise<Response> => {
-  //   try {
-  //     const {
-  //       params: { id },
-  //     } = req;
-  //     const result = await this.employeeService.deleteEmployee(id);
-
-  //     return this.responseParser
-  //       .setHttpCode(constant.HTTP_STATUS_OK)
-  //       .setBody(result)
-  //       .setMessage("employee delete successfully")
-  //       .send(res);
-  //   } catch (err) {
-  //     res.status(err.status);
-  //     res.json({
-  //       error: {
-  //         message: err.message,
-  //       },
-  //     });
-  //   }
-  // };
 }
 
 export default EmployeeController;

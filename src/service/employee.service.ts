@@ -7,34 +7,74 @@ import { Employee } from "../database/model/employee.model";
 
 @Service()
 export class EmployeeService {
-  // fetch all job title details
-  // public async findEmploye(): Promise<IEmployee[]> {
-  //   try {
-  //     const empRepository = getManager().getCustomRepository(EmployeeRepo);
-  //     const employee = await empRepository.find();
-
-  //     const empArray = (employee || []).map((emp: IEmployee) => ({
-  //       employeeId: emp.employeeId,
-  //       email: emp.email,
-  //       firstName: emp.firstName,
-  //       lastName: emp.lastName,
-  //       gender: emp.gender,
-  //       hireDate: emp.hireDate,
-  //       mobileNumber: emp.mobileNumber,
-  //     }));
-  //     return empArray || [];
-  //   } catch (err) {
-  //     throw new createHttpError.BadRequest("something wrong");
-  //   }
-  // }
-
-  // create Job Title
+  // create Employee
   public async createEmployee(employee: Employee): Promise<IEmployee> {
     try {
       const empRepository = getManager().getCustomRepository(EmployeeRepo);
 
       const newEmp = await empRepository.save(employee);
       return newEmp;
+    } catch (err) {
+      throw new createHttpError.BadRequest("something went wrong");
+    }
+  }
+
+  // Get Employee Details with job title and department
+  public async getEmployeeTitleAndDepartment(): Promise<IEmployee[]> {
+    try {
+      const result = await getManager()
+        .getCustomRepository(EmployeeRepo)
+        .createQueryBuilder("employee")
+        .leftJoinAndSelect("employee.jobtitle", "jobtitle")
+        .leftJoinAndSelect("employee.department", "department")
+        .getMany();
+      return result;
+    } catch (err) {
+      throw new createHttpError.BadRequest("something went wrong");
+    }
+  }
+
+  // Get Employee Details with job title and department By Id
+  public async getEmployeeTitleAndDepartmentByID(id: string): Promise<IEmployee> {
+    try {
+      const result = await getManager()
+        .getCustomRepository(EmployeeRepo)
+        .createQueryBuilder("employee")
+        .leftJoinAndSelect("employee.jobtitle", "jobtitle")
+        .leftJoinAndSelect("employee.department", "department")
+        .where("employee.employeeId = :id", { id })
+        .getOne();
+      return result;
+    } catch (err) {
+      throw new createHttpError.BadRequest("something went wrong");
+    }
+  }
+
+  // Get Employee attendance by employee Id
+  public async getEmployeeAttendanceByID(employeeId: string): Promise<IEmployee> {
+    try {
+      const result = await getManager()
+        .getCustomRepository(EmployeeRepo)
+        .createQueryBuilder("employee")
+        .leftJoinAndSelect("employee.attendance", "attendance")
+        .where("attendance.employee = :employeeId", { employeeId })
+        .getOne();
+      return result;
+    } catch (err) {
+      throw new createHttpError.BadRequest("something went wrong");
+    }
+  }
+
+  // Get Employee leaves/attendance by employee Id
+  public async getEmployeeLeaveAttendanceByID(employeeId: string): Promise<IEmployee> {
+    try {
+      const employeeRepository = getManager().getCustomRepository(EmployeeRepo);
+      const result = await employeeRepository.findOne({
+        relations: ["leave", "attendance"],
+        where: { employeeId },
+        select: ["employeeId", "firstName", "lastName", "email", "jobTitle"],
+      });
+      return result;
     } catch (err) {
       throw new createHttpError.BadRequest("something went wrong");
     }
