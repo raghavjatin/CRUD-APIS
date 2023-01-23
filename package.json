@@ -68,6 +68,7 @@
     "typescript": "^4.7.2"
   },
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "@types/http-errors": "^2.0.1",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
@@ -82,6 +83,7 @@
     "pg": "^8.5.1",
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
     "tslib": "^1.11.2",
     "typedi": "^0.10.0",
     "typeorm": "^0.2.29",

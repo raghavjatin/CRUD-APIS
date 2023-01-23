@@ -1,39 +1,35 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class product1608788393127 implements MigrationInterface {
-  private readonly tableName = "products";
+export class attendance1674107395981 implements MigrationInterface {
+  private readonly tableName = "attendance";
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
         name: this.tableName,
         columns: [
           {
-            name: "id",
+            name: "attendance_id",
             type: "uuid",
             isPrimary: true,
             isNullable: false,
             default: "uuid_generate_v4()",
           },
           {
-            name: "product_name",
-            type: "varchar",
+            name: "time_in",
+            type: "timestamptz",
             isNullable: false,
-            isUnique: false,
+            default: "now()",
           },
           {
-            name: "quantity",
-            type: "varchar",
-            isNullable: true,
+            name: "time_out",
+            type: "timestamptz",
+            isNullable: false,
+            default: "now()",
           },
           {
-            name: "price",
-            type: "integer",
-            isNullable: true,
-          },
-          {
-            name: "description",
-            type: "varchar",
-            isNullable: true,
+            name: "employee_id",
+            type: "uuid",
+            isNullable: false,
           },
           {
             name: "created_at",
@@ -47,6 +43,13 @@ export class product1608788393127 implements MigrationInterface {
             isNullable: false,
             default: "now()",
           },
+        ],
+        foreignKeys: [
+          new TableForeignKey({
+            columnNames: ["employee_id"],
+            referencedColumnNames: ["employee_id"],
+            referencedTableName: "employee",
+          }),
         ],
       }),
     );

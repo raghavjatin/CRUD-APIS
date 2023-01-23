@@ -1,39 +1,24 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class product1608788393127 implements MigrationInterface {
-  private readonly tableName = "products";
+export class department1674107368098 implements MigrationInterface {
+  private readonly tableName = "department";
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
         name: this.tableName,
         columns: [
           {
-            name: "id",
+            name: "department_id",
             type: "uuid",
             isPrimary: true,
             isNullable: false,
             default: "uuid_generate_v4()",
           },
           {
-            name: "product_name",
+            name: "department_name",
             type: "varchar",
             isNullable: false,
-            isUnique: false,
-          },
-          {
-            name: "quantity",
-            type: "varchar",
-            isNullable: true,
-          },
-          {
-            name: "price",
-            type: "integer",
-            isNullable: true,
-          },
-          {
-            name: "description",
-            type: "varchar",
-            isNullable: true,
+            isUnique: true,
           },
           {
             name: "created_at",

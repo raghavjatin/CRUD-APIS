@@ -8,6 +8,17 @@ const requiredStringValidation = (key: string): Joi.StringSchema =>
       "any.required": `${key} is required`,
     });
 
+const requiredEmailValidation = (key: string): Joi.StringSchema =>
+  Joi.string()
+    .email()
+    .required()
+    .messages({
+      "string.base": `${key} must be a string`,
+      "string.empty": `${key} is required`,
+      "any.required": `${key} is required`,
+      "string.email": `${key} is invalid`,
+    });
+
 const optionalStringValidation = (key: string): Joi.StringSchema =>
   Joi.string().messages({
     "string.base": `${key} must be a string`,
@@ -39,10 +50,35 @@ const optionalNumberValidation = (key: string): Joi.NumberSchema =>
     "any.required": `${key} is required`,
   });
 
+const phoneValidation = (key: string): Joi.StringSchema =>
+  Joi.string()
+    .required()
+    .regex(/^[ 0-9+]*$/)
+    .messages({
+      "string.base": `${key} must be in a valid format`,
+      "any.required": `${key} is required`,
+      "string.pattern.base": `${key} is not in valid format`,
+      "string.empty": `${key} is not in valid format`,
+    });
+
+const dateValidation = (key: string): Joi.StringSchema =>
+  Joi.string()
+    .required()
+    .regex(/^\d{2}-\d{2}-\d{4}$/)
+    .messages({
+      "string.base": `${key} must be in a valid format`,
+      "any.required": `${key} is required`,
+      "string.pattern.base": `${key} is not in valid format`,
+      "string.empty": `${key} is not in valid format`,
+    });
+
 export {
   requiredStringValidation,
   optionalStringValidation,
   requiredNumberValidation,
   requiredQuantityValidation,
+  requiredEmailValidation,
   optionalNumberValidation,
+  phoneValidation,
+  dateValidation,
 };

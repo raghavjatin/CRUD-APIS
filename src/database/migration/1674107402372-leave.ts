@@ -1,39 +1,40 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class product1608788393127 implements MigrationInterface {
-  private readonly tableName = "products";
+export class leave1674107402372 implements MigrationInterface {
+  private readonly tableName = "leave";
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
         name: this.tableName,
         columns: [
           {
-            name: "id",
+            name: "leave_id",
             type: "uuid",
             isPrimary: true,
             isNullable: false,
             default: "uuid_generate_v4()",
           },
           {
-            name: "product_name",
+            name: "from_date",
+            type: "timestamptz",
+            isNullable: false,
+            default: "now()",
+          },
+          {
+            name: "to_date",
+            type: "timestamptz",
+            isNullable: false,
+            default: "now()",
+          },
+          {
+            name: "reason",
             type: "varchar",
             isNullable: false,
-            isUnique: false,
           },
           {
-            name: "quantity",
-            type: "varchar",
-            isNullable: true,
-          },
-          {
-            name: "price",
-            type: "integer",
-            isNullable: true,
-          },
-          {
-            name: "description",
-            type: "varchar",
-            isNullable: true,
+            name: "employee_id",
+            type: "uuid",
+            isNullable: false,
           },
           {
             name: "created_at",
@@ -47,6 +48,14 @@ export class product1608788393127 implements MigrationInterface {
             isNullable: false,
             default: "now()",
           },
+        ],
+        foreignKeys: [
+          new TableForeignKey({
+            name: "FK_employee_id",
+            columnNames: ["employee_id"],
+            referencedColumnNames: ["employee_id"],
+            referencedTableName: "employee",
+          }),
         ],
       }),
     );
