@@ -48,11 +48,7 @@ class ProductController {
     }
   };
 
-  public findProductById = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<Response> => {
+  public findProductById = async (req: Request, res: Response): Promise<Response> => {
     try {
       const products = await this.productService.findProductById(req.params.id);
       return this.responseParser
@@ -61,15 +57,16 @@ class ProductController {
         .setMessage("product find successfully!")
         .send(res);
     } catch (err) {
-      next(err);
+      res.status(err.status || 500);
+      res.json({
+        error: {
+          message: err.message,
+        },
+      });
     }
   };
 
-  public updateProductDetails = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<Response> => {
+  public updateProductDetails = async (req: Request, res: Response): Promise<Response> => {
     try {
       const data = req.body;
       const {
@@ -82,27 +79,34 @@ class ProductController {
         .setMessage("update product successfully!")
         .send(res);
     } catch (err) {
-      next(err);
+      res.status(err.status || 500);
+      res.json({
+        error: {
+          message: err.message,
+        },
+      });
     }
   };
 
-  public deleteProductById = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<Response> => {
+  public deleteProductById = async (req: Request, res: Response): Promise<Response> => {
     try {
       const {
         params: { id },
       } = req;
       const result = await this.productService.deleteProduct(id);
+
       return this.responseParser
         .setHttpCode(constant.HTTP_STATUS_OK)
         .setBody(result)
         .setMessage("product delete successfully!")
         .send(res);
     } catch (err) {
-      next(err);
+      res.status(err.status || 500);
+      res.json({
+        error: {
+          message: err.message,
+        },
+      });
     }
   };
 }
